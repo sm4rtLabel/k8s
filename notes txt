@@ -3,3 +3,15 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisione
 helm install my-ingress ingress-nginx/ingress-nginx   --namespace ingress-nginx   --set controller.service.type=ClusterIP   --set controller.hostNetwork=true   --set controller.admissionWebhooks.enabled=false
 
 helm install traefik traefik/traefik   --namespace traefik   --set deployment.replicas=1   --set providers.kubernetesIngress.enabled=true   --set ports.web.hostPort=80   --set ports.websecure.hostPort=443   --set service.type=ClusterIP
+
+
+
+curl -k -X POST https://hyperbeam.delaparra.local/~process@1.0/schedule \
+-H "Content-Type: application/json" \
+-d '{
+  "device": "process@1.0",
+  "type": "Process",
+  "scheduler": "nCulK0tHVO4KIhQiRXtg-UET2R4YivjhAGev_xSOAio",
+  "module": "Do_Uc2Sju_ffp6Ev0AnLVdPtot15rvMjP-a9VVaA5fM",
+  "data": {}
+}'
