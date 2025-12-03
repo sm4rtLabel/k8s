@@ -18,6 +18,7 @@ spec:
           image: 'foxoffire33/hyperbeam:latest'
           ports:
             - containerPort: 8734
+            - containerPort: 6363
           env:
             - name: HB_STORE_PATH
               value: "/data"
