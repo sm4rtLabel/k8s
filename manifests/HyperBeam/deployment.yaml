@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: hyperbeam
-          image: ${DOCKER_IMAGE}
+          image: 'foxoffire33/hyperbeam:latest'
           ports:
             - containerPort: 8734
           env:
