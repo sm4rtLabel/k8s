@@ -4,22 +4,22 @@ metadata:
   name: hyperbeam-ingress
   namespace: hyperbeam
   annotations:
+    # Cert-manager TLS
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+
+    # NGINX ingress settings
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-body-size: "50m"
-    # FIXED ~ PATHS:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      location / {
-        proxy_pass http://hyperbeam-service.hyperbeam.svc.cluster.local:8734;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-      }
+
+    # WebSocket support (Hyperbeam uses WebSockets)
+    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    nginx.ingress.kubernetes.io/connection-proxy-header: "upgrade"
+    nginx.ingress.kubernetes.io/upgrade: "websocket"
+
 spec:
   ingressClassName: nginx
   tls:
