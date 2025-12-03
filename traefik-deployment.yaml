@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      serviceAccountName: traefik
+      hostNetwork: true  # <--- enables direct host networking
+      containers:
+        - name: traefik
+          image: traefik:v3.6.2
+          args:
+            - --entrypoints.web.address=:80
+            - --entrypoints.websecure.address=:443
+            - --providers.kubernetesingress
+          ports:
+            - name: web
+              containerPort: 80
+            - name: websecure
+              containerPort: 443

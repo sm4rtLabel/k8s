@@ -2,15 +2,4 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisione
 
 helm install my-ingress ingress-nginx/ingress-nginx   --namespace ingress-nginx   --set controller.service.type=ClusterIP   --set controller.hostNetwork=true   --set controller.admissionWebhooks.enabled=false
 
-
- curl -k -X POST https://hyperbeam.delaparra.local/~cache@1.0   -H "accept-codec: json@1.0"   -H "Content-Type: application/json"   -d '{
-    "proc_id": "rFy1rhAo6VBlzOl1cZppRiIWGMxoGP7LujrirIGUV5M",
-    "slot": "slot_ref_or_key",
-    "msg": {"key": "value", "anotherKey": 123}
-  }'
-
-POST /~cache@1.0/write accept-codec==json@1.0 body:='{
-                                                        "proc_id": "rFy1rhAo6VBlzOl1cZppRiIWGMxoGP7LujrirIGUV5M",
-                                                        "slot": "slot_ref_or_key",
-                                                        "msg": {"key": "value", "anotherKey": 123}
-                                                      }'
+helm install traefik traefik/traefik   --namespace traefik   --set deployment.replicas=1   --set providers.kubernetesIngress.enabled=true   --set ports.web.hostPort=80   --set ports.websecure.hostPort=443   --set service.type=ClusterIP
