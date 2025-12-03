@@ -18,6 +18,5 @@ preloaded_devices, [
       "cache@1.0",
       "process@1.0",
       "message@1.0",
-      wasm64@1.0,
-      lua@1.0
+      "~lua@5.3a"
     ].
