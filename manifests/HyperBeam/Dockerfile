@@ -52,5 +52,6 @@ ENV HB_KEY=/secrets/wallet.json
 
 VOLUME ["/data"]
 EXPOSE 8734
+EXPOSE 6363
 
 CMD ["/hb/bin/hb", "foreground"]

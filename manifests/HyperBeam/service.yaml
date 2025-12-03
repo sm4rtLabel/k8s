@@ -10,3 +10,16 @@ spec:
       port: 8734
       targetPort: 8734
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperbeam-cu-service
+spec:
+  selector:
+    app: hyperbeam
+  ports:
+    - protocol: TCP
+      port: 6363
+      targetPort: 6363
+  type: ClusterIP
