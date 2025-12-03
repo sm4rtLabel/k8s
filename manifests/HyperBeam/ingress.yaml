@@ -1,38 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hyperbeam-ingress
-  namespace: hyperbeam
+  name: nextcloud-ingress
+  namespace: delaparra-cloud
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
-    nginx.ingress.kubernetes.io/proxy-buffering: "off"
-    nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-
-    # Force HTTPS
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-
-    # Timeout & body size
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
-
-    # WebSocket support
-    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
-    nginx.ingress.kubernetes.io/connection-proxy-header: "upgrade"
-    nginx.ingress.kubernetes.io/upgrade: "websocket"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_pass http://hyperbeam-service.hyperbeam.svc.cluster.local:8734$request_uri;
-
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
         - hyperbeam.delaparra.local
-      secretName: hyperbeam-tls-secret
+      secretName: hyperbeam-local
   rules:
-    - host: hyperbeam.delaparra.local
+    - host: next.delaparra.local
       http:
         paths:
           - path: /
