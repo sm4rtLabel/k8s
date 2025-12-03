@@ -6,6 +6,12 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"          # HyperBEAM serves HTTPS
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"       # Long AO requests
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"             # Large TX payloads
+    nginx.ingress.kubernetes.io/use-regex: "true"                  # Preserve ~device@1.0 paths
 spec:
   ingressClassName: nginx
   tls:
