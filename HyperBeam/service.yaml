@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperbeam-service
+spec:
+  selector:
+    app: hyperbeam
+  ports:
+    - name: http
+      port: 8734
+      targetPort: 8734
+  type: ClusterIP
