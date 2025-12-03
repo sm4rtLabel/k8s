@@ -5,15 +5,13 @@ metadata:
   namespace: hyperbeam
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-body-size: "50m"
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # REMOVED: use-regex, rewrite-target, configuration-snippet (BREAK ~ PATHS)
 spec:
   ingressClassName: nginx
   tls:
@@ -24,8 +22,8 @@ spec:
     - host: hyperbeam.delaparra.local
       http:
         paths:
-          - path: /(.*)
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: hyperbeam-service
