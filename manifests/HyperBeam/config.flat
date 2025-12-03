@@ -7,6 +7,7 @@ bundler_ans104 = "https://up.arweave.net:443".
 protocol = http2.
 
 load_remote_devices = true.
+cu_port, 6363}
 
 preloaded_devices, [
       "flat@1.0",
