@@ -22,8 +22,6 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
     nginx.ingress.kubernetes.io/connection-proxy-header: "upgrade"
     nginx.ingress.kubernetes.io/upgrade: "websocket"
-
-    # Preserve full request URI for special characters (~, @)
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_pass http://hyperbeam-service.hyperbeam.svc.cluster.local:8734$request_uri;
 
