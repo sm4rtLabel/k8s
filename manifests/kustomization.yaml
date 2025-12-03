@@ -3,7 +3,9 @@ kind: Kustomization
 namespace: smartlabel
 resources:
 # Postgres
+  - HyperBeam/namespace.yml
   - HyperBeam/secret.yaml
   - HyperBeam/deployment.yaml
   - HyperBeam/service.yaml
   - HyperBeam/pvc.yaml
+  - HyperBeam/ingress.yaml
