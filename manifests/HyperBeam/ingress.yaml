@@ -7,6 +7,7 @@ metadata:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
     nginx.ingress.kubernetes.io/proxy-buffering: "off"
     nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+    nginx.ingress.kubernetes.io/proxy-max-temp-file-size: "0"
 
     # Force HTTPS
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
