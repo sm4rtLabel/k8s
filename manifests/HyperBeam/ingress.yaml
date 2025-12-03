@@ -13,7 +13,7 @@ spec:
         - hyperbeam.delaparra.local
       secretName: hyperbeam-local
   rules:
-    - host: next.delaparra.local
+    - host: hyperbeam.delaparra.local
       http:
         paths:
           - path: /
