@@ -1,0 +1,9 @@
+port = 8734.
+priv_key_location = "/secrets/wallet.json".
+store_path = "/data".
+
+gateway = "https://arweave.net".
+bundler_ans104 = "https://up.arweave.net:443".
+protocol = http2.
+
+load_remote_devices = true.

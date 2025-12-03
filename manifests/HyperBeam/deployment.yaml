@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hyperbeam
+  name: hyperbeam-deployment
 spec:
   replicas: 1
   selector:
@@ -13,48 +13,24 @@ spec:
         app: hyperbeam
     spec:
       containers:
-        - name: hb
+        - name: hyperbeam
           image: ${DOCKER_IMAGE}
           ports:
             - containerPort: 8734
           env:
             - name: HB_STORE_PATH
-              value: /var/lib/hb
+              value: "/data"
             - name: HB_KEY
-              value: /secrets/wallet.json
-            - name: HB_CONFIG_LOCATION
-              value: /config/config.flat
+              value: "/secrets/wallet.json"
           volumeMounts:
-            - name: wallet
-              mountPath: /secrets
-              readOnly: true
-            - name: config
-              mountPath: /config
-              readOnly: true
-            - name: data
+            - name: data-volume
               mountPath: /data
-          livenessProbe:
-            httpGet:
-              path: /~meta@1.0/info
-              port: 8734
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /~meta@1.0/info
-              port: 8734
-            initialDelaySeconds: 30
-          resources:
-            requests:
-              cpu: "500m"
-              memory: "2Gi"
-            limits:
-              cpu: "2000m"
-              memory: "8Gi"
+            - name: secrets-volume
+              mountPath: /secrets
       volumes:
-        - name: wallet
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: hyperbeam-pvc
+        - name: secrets-volume
           secret:
             secretName: hyperbeam-wallet
-        - name: config
-          secret:
-            secretName: hyperbeam-config

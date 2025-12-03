@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hyperbeam-ingress
+  namespace: hyperbeam
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - hyperbeam.delaparra-local
+      secretName: hyperbeam-tls-secret
+  rules:
+    - host: hyperbeam.delaparra-local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hyperbeam-service
+                port:
+                  number: 8734
