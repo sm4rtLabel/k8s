@@ -29,6 +29,9 @@ spec:
               mountPath: /data
             - name: secrets-volume
               mountPath: /secrets
+            - name: hb-config-volume
+              mountPath: /app/HyperBEAM/config.flat
+              subPath: config.flat
       volumes:
         - name: data-volume
           persistentVolumeClaim:
