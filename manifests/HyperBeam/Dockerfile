@@ -39,7 +39,7 @@ RUN cd /app/HyperBEAM && rebar3 release
 FROM builder
 WORKDIR /hb
 # Install minimal runtime dependencies
-RUN apt-get update && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y net-tools curl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/HyperBEAM/_build/default/rel/hb /hb
 
