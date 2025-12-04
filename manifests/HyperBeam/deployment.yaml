@@ -29,13 +29,16 @@ spec:
               mountPath: /data
             - name: secrets-volume
               mountPath: /secrets
-            - name: hb-config-volume
+            - name: config-volume
               mountPath: /app/HyperBEAM/config.flat
               subPath: config.flat
       volumes:
         - name: data-volume
           persistentVolumeClaim:
             claimName: hyperbeam-pvc
+        - name: config-volume
+          secret:
+            secretName: hyperbeam-config
         - name: secrets-volume
           secret:
             secretName: hyperbeam-wallet
