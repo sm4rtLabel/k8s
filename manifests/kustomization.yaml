@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: hyperbeam
 resources:
   - namespace.yml
+  - secret.yaml
   # Postgres
   - Postgres/deployment.yaml
   - Postgres/service.yaml
@@ -10,7 +11,6 @@ resources:
   - Postgres/pv.yaml
   - Postgres/secret.yaml
   # HyperBeam
-  - HyperBeam/secret.yaml
   - HyperBeam/deployment.yaml
   - HyperBeam/service.yaml
   - HyperBeam/pvc.yaml
