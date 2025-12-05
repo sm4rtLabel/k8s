@@ -20,4 +20,3 @@ resources:
   - ComputeUnit/service.yaml
   - ComputeUnit/ingress.yaml
   - ComputeUnit/pvc.yaml
-  - ComputeUnit/certificate.yaml
