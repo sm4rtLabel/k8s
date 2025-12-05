@@ -17,10 +17,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - hyperbeam.delaparra.local
+        - hb.delaparra.local
       secretName: hyperbeam-local
   rules:
-    - host: hyperbeam.delaparra.local
+    - host: hb.delaparra.local
       http:
         paths:
           - path: /
