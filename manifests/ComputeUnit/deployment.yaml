@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compute-unit-deployment
+  namespace: hyperbeam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compute-unit
+  template:
+    metadata:
+      labels:
+        app: hyperbeam
+    spec:
+      containers:
+        - name: hyperbeam
+          image: 'foxoffire33/compute-unit:latest'
+          ports:
+            - containerPort: 6363
+          volumeMounts:
+            - name: secrets-volume
+              mountPath: /secrets
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: hyperbeam-pvc
+        - name: secrets-volume
+          secret:
+            secretName: hyperbeam-wallet
