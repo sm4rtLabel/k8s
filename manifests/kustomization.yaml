@@ -2,10 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: hyperbeam
 resources:
-# Postgres
-  - HyperBeam/namespace.yml
+  - namespace.yml
+  # Postgres
+  - Postgres/deployment.yaml
+  - Postgres/service.yaml
+  - Postgres/pvc.yaml
+  - Postgres/pv.yaml
+  - Postgres/secret.yaml
+  # HyperBeam
   - HyperBeam/secret.yaml
   - HyperBeam/deployment.yaml
   - HyperBeam/service.yaml
   - HyperBeam/pvc.yaml
   - HyperBeam/ingress.yaml
+# Compute Unit
