@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: hyperbeam
-          image: 'foxoffire33/compute-unit:latest'
+          image: 'foxoffire33/compute-unit'
           ports:
             - containerPort: 6363
           volumeMounts:
