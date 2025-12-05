@@ -11,10 +11,10 @@ spec:
   template:
     metadata:
       labels:
-        app: hyperbeam
+        app: compute-unit
     spec:
       containers:
-        - name: hyperbeam
+        - name: compute-unit
           image: 'foxoffire33/compute-unit'
           ports:
             - containerPort: 6363
@@ -24,7 +24,7 @@ spec:
       volumes:
         - name: data-volume
           persistentVolumeClaim:
-            claimName: hyperbeam-pvc
+            claimName: compute-unit-pvc
         - name: secrets-volume
           secret:
             secretName: hyperbeam-wallet
