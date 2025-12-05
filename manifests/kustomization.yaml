@@ -15,8 +15,10 @@ resources:
   - HyperBeam/service.yaml
   - HyperBeam/pvc.yaml
   - HyperBeam/ingress.yaml
+  - HyperBeam/certificate.yaml
 # Compute Unit
   - ComputeUnit/deployment.yaml
   - ComputeUnit/service.yaml
   - ComputeUnit/ingress.yaml
   - ComputeUnit/pvc.yaml
+  - ComputeUnit/certificate.yaml

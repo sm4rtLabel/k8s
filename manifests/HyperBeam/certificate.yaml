@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hb-delaparra-local-tls
+  namespace: default
+spec:
+  secretName: hb-delaparra-local-tls
+  dnsNames:
+    - hb.delaparra.local
+  issuerRef:
+    name: selfsigned-cluster-issuer
+    kind: ClusterIssuer
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
