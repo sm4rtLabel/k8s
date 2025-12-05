@@ -1,0 +1,29 @@
+{
+  "name": "wao-test-project",
+  "version": "1.0.0",
+  "description": "WAO testing framework for Arweave/AO development",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test **/*.test.js",
+    "test:watch": "node --test --watch **/*.test.js"
+  },
+  "keywords": [
+    "wao",
+    "arweave",
+    "ao",
+    "hyperbeam",
+    "testing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "wao": "^0.38.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@permaweb/aoconnect": "^0.0.92"
+  }
+}

@@ -1,6 +1,9 @@
 # ===== Builder Stage =====
-FROM ubuntu:22.04 as builder
+FROM ubuntu:22.04 AS builder
 WORKDIR /app
+
+ARG HB_CU_ADDRESS
+ARG HB_CU_PORT
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
@@ -26,31 +29,47 @@ RUN curl -L https://github.com/erlang/rebar3/releases/latest/download/rebar3 -o 
     && chmod +x /usr/local/bin/rebar3 \
     && rebar3 --version
 
+COPY config.flat /app/config.flat
+
+# Install WebAssembly runtime (wasmtime)
+RUN curl -fsSL https://github.com/bytecodealliance/wasmtime/releases/download/v11.0.0/wasmtime-v11.0.0-x86_64-linux.tar.xz -o /tmp/wasmtime.tar.xz && \
+    mkdir -p /opt/wasmtime && tar -xf /tmp/wasmtime.tar.xz -C /opt/wasmtime --strip-components=1 && \
+    ln -s /opt/wasmtime/wasmtime /usr/local/bin/wasmtime && \
+    rm /tmp/wasmtime.tar.xz
+
+# Verify wasmtime installation
+RUN wasmtime --version
+
 # Clone and compile HyperBEAM (Erlang + Rust NIFs)
 RUN git clone https://github.com/permaweb/HyperBEAM.git && \
-    cd HyperBEAM && \
+    cd HyperBEAM && cp /app/config.flat ./config.flat && \
+    sed -i -E "s|\"http://localhost:6363\"|\"http://${HB_CU_ADDRESS}:${HB_CU_PORT}\"|g" ./src/hb_opts.erl && \
     rebar3 get-deps && rebar3 compile
 
-COPY config.flat /app/HyperBEAM/config.flat
-
+# Build release with proper sys.config
 RUN cd /app/HyperBEAM && rebar3 release
 
-## ===== Runtime Stage =====
-FROM builder
+# ===== Runtime Stage =====
+FROM ubuntu:22.04 AS runtime
 WORKDIR /hb
+
 # Install minimal runtime dependencies
 RUN apt-get update && apt-get install -y net-tools curl && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /app/HyperBEAM/_build/default/rel/hb /hb
+# Copy HyperBEAM release
+COPY --from=builder /app/HyperBEAM/ /hb
+COPY --from=builder /opt/wasmtime/wasmtime /opt/wasmtime/wasmtime
 
+RUN ln -s /opt/wasmtime/wasmtime /usr/local/bin/wasmtime
 
-# Set environment
+# Set environment variables
 ENV PATH="/usr/local/bin:$PATH"
 ENV HB_STORE_PATH=/data
 ENV HB_KEY=/secrets/wallet.json
 
-VOLUME ["/data"]
-EXPOSE 8734
-EXPOSE 6363
+# Create volumes
+VOLUME ["/data", "/secrets"]
 
-CMD ["/hb/bin/hb", "foreground"]
+WORKDIR /hb/_build/default/rel/hb
+COPY config.flat /hb/releases/0.0.1/sys.config
+CMD ["./bin/hb", "foreground"]

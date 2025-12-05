@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nextcloud-ingress
-  namespace: delaparra-cloud
+  name: hyperbeam-ingress
+  namespace: hyperbeam
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
@@ -27,6 +27,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: hyperbeam-service
+                name: hb-service
                 port:
                   number: 8734
