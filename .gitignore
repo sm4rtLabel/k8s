@@ -1,2 +1,4 @@
 /manifests/HyperBeam/wallet.json
 /manifests/wallet.json
+/test/node_modules/
+/manifests/ComputeUnit/node_modules
