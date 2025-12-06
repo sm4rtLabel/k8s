@@ -5,43 +5,42 @@ services:
       context: ./HyperBeam
       dockerfile: ./Dockerfile
       args:
-        HB_CU_ADDRESS: cu-service
-        HB_CU_PORT: 6363
+        HB_CU_ADDRESS: hb-service
+        HB_CU_PORT: 8734
     container_name: HyperBeam
     ports:
       - "8734:8734"
-      - "8000:8000"
     volumes:
       - ./data:/data
       - ./config.flat:/app/HyperBEAM/config.flat:ro
       - ./wallet.json:/secrets/wallet.json:ro
     environment:
        - HB_CONFIG_LOCATION=/hb/releases/0.0.1/sys.config
-    depends_on:
-      - cu-service
+#    depends_on:
+#      - cu-service
     restart: unless-stopped
-    networks:
-      hyperbeam-net:
-        aliases:
-          - hb.local
+#    networks:
+#      hyperbeam-net:
+#        aliases:
+#          - hb.local
 
-  cu-service:
-    build:
-      context: ComputeUnit
-      dockerfile: ./Dockerfile
-    container_name: ComputerUnit
-    ports:
-      - "6363:6363"
-    volumes:
-      - ./ComputeUnit/App/.env:/usr/app/.env:ro
-      - ./wallet.json:/secrets/wallet.json:ro
-    hostname: hyperbeam-cu-service
-    restart: unless-stopped
-    networks:
-      hyperbeam-net:
-        aliases:
-          - cu.local
-
-networks:
-  hyperbeam-net:
-    driver: bridge
+#  cu-service:
+#    build:
+#      context: ComputeUnit
+#      dockerfile: ./Dockerfile
+#    container_name: ComputerUnit
+#    ports:
+#      - "6363:6363"
+#    volumes:
+#      - ./ComputeUnit/App/.env:/usr/app/.env:ro
+#      - ./wallet.json:/secrets/wallet.json:ro
+#    hostname: hyperbeam-cu-service
+#    restart: unless-stopped
+#    networks:
+#      hyperbeam-net:
+#        aliases:
+#          - cu.local
+#
+#networks:
+#  hyperbeam-net:
+#    driver: bridge

@@ -40,10 +40,17 @@ RUN curl -fsSL https://github.com/bytecodealliance/wasmtime/releases/download/v1
 # Verify wasmtime installation
 RUN wasmtime --version
 
-# Clone and compile HyperBEAM (Erlang + Rust NIFs)
-RUN git clone https://github.com/permaweb/HyperBEAM.git && \
-    cd HyperBEAM && cp /app/config.flat ./config.flat && \
-    sed -i -E "s|\"http://localhost:6363\"|\"http://${HB_CU_ADDRESS}:${HB_CU_PORT}\"|g" ./src/hb_opts.erl && \
+# Download Hyperbeam
+RUN git clone https://github.com/permaweb/HyperBEAM.git
+#    cd HyperBEAM && cp /app/config.flat ./config.flat && \
+    #sed -i -E "s|\"http://localhost:6363\"|\"http://${HB_CU_ADDRESS}:${HB_CU_PORT}\"|g" ./src/hb_opts.erl && \
+#    rebar3 get-deps && rebar3 compile
+
+COPY config.flat /app/HyperBEAM/config.flat
+COPY /data/replaceSourceFiles/*.erl /app/HyperBEAM/src/
+
+# Copy custom source code and compile
+RUN cd /app/HyperBEAM/  && \
     rebar3 get-deps && rebar3 compile
 
 # Build release with proper sys.config
